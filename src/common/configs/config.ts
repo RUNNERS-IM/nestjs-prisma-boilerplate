@@ -9,9 +9,9 @@ const config: Config = {
   },
   swagger: {
     enabled: true,
-    title: 'Nestjs FTW',
+    title: 'Nestjs Boilerplate',
     description: 'The nestjs API description',
-    version: '1.5',
+    version: '1.0',
     path: 'api',
   },
   graphql: {

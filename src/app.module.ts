@@ -14,7 +14,10 @@ import { GqlConfigService } from './gql-config.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config],
+    }),
     PrismaModule.forRoot({
       isGlobal: true,
       prismaServiceOptions: {

@@ -1,54 +1,60 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
+import { hash } from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
+  // 데이터 삭제
   await prisma.user.deleteMany();
   await prisma.post.deleteMany();
 
   console.log('Seeding...');
 
-  const user1 = await prisma.user.create({
+  // 비밀번호 해시 생성
+  const passwordHash = await hash('1234', 10); // 10은 saltRounds를 의미합니다.
+
+  // 관리자 User 생성
+  const adminUser = await prisma.user.create({
     data: {
-      email: 'lisa@simpson.com',
-      firstname: 'Lisa',
-      lastname: 'Simpson',
-      password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
-      role: 'USER',
-      posts: {
-        create: {
-          title: 'Join us for Prisma Day 2019 in Berlin',
-          content: 'https://www.prisma.io/day/',
-          published: true,
-        },
-      },
-    },
-  });
-  const user2 = await prisma.user.create({
-    data: {
-      email: 'bart@simpson.com',
-      firstname: 'Bart',
-      lastname: 'Simpson',
-      role: 'ADMIN',
-      password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
-      posts: {
-        create: [
-          {
-            title: 'Subscribe to GraphQL Weekly for community news',
-            content: 'https://graphqlweekly.com/',
-            published: true,
-          },
-          {
-            title: 'Follow Prisma on Twitter',
-            content: 'https://twitter.com/prisma',
-            published: false,
-          },
-        ],
-      },
+      email: 'admin@runners.im',
+      password: passwordHash, // 암호화된 비밀번호 사용
+      role: Role.ADMIN,
     },
   });
 
-  console.log({ user1, user2 });
+  console.log('Admin User:', adminUser);
+
+  // 기본 Service 생성
+  const defaultService = await prisma.service.create({
+    data: {
+      name: 'Default Service',
+    },
+  });
+
+  console.log('Default Service:', defaultService);
+
+  // 서비스별로 테스트 유저들 생성
+  const testUserEmails = [
+    'test1@runners.im',
+    'test2@runners.im',
+    'test3@runners.im',
+  ];
+  const testUsers = await Promise.all(
+    testUserEmails.map((email) =>
+      prisma.user.create({
+        data: {
+          email,
+          password: passwordHash, // 같은 암호화된 비밀번호 사용
+          role: Role.USER,
+          serviceUsers: {
+            create: [{ serviceId: defaultService.id }],
+          },
+        },
+      }),
+    ),
+  );
+
+  console.log('Test Users:', testUsers);
 }
 
 main()

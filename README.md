@@ -2,7 +2,8 @@
 
 Starter template for 😻 [NestJS](https://nestjs.com/) and [Prisma](https://www.prisma.io/).
 
-> Checkout [NestJS Prisma Schematics](https://github.com/marcjulian/nestjs-prisma) to automatically add Prisma support to your Nest application.
+> Checkout [NestJS Prisma Schematics](https://github.com/marcjulian/nestjs-prisma) to automatically add Prisma support
+> to your Nest application.
 
 ## Features
 
@@ -15,34 +16,35 @@ Starter template for 😻 [NestJS](https://nestjs.com/) and [Prisma](https://www
 ## Overview
 
 - [Instructions](#instructions)
-  - [Features](#features)
-  - [Overview](#overview)
-  - [Prisma Setup](#prisma-setup)
-    - [1. Install Dependencies](#1-install-dependencies)
-    - [2. PostgreSQL with Docker](#2-PostgreSQL-with-docker)
-    - [3. Prisma: Prisma Migrate](#3-prisma-prisma-migrate)
-    - [4. Prisma: Prisma Client JS](#4-prisma-client-js)
-    - [5. Seed the database data with this script](#5-seed-the-database-data-with-this-script)
-    - [6. Start NestJS Server](#6-start-nestjs-server)
-  - [GraphQL Playground](#graphql-playground)
-  - [Rest Api](#rest-api)
-  - [Docker](#docker)
-  - [Schema Development](#schema-development)
-  - [NestJS - Api Schema](#nestjs---api-schema)
-    - [Resolver](#resolver)
-  - [GraphQL Client](#graphql-client)
-    - [Angular](#angular)
-      - [Setup](#setup)
-      - [Queries](#queries)
-      - [Mutations](#mutations)
-      - [Subscriptions](#subscriptions)
-      - [Authentication](#authentication)
+    - [Features](#features)
+    - [Overview](#overview)
+    - [Prisma Setup](#prisma-setup)
+        - [1. Install Dependencies](#1-install-dependencies)
+        - [2. PostgreSQL with Docker](#2-PostgreSQL-with-docker)
+        - [3. Prisma: Prisma Migrate](#3-prisma-prisma-migrate)
+        - [4. Prisma: Prisma Client JS](#4-prisma-client-js)
+        - [5. Seed the database data with this script](#5-seed-the-database-data-with-this-script)
+        - [6. Start NestJS Server](#6-start-nestjs-server)
+    - [GraphQL Playground](#graphql-playground)
+    - [Rest Api](#rest-api)
+    - [Docker](#docker)
+    - [Schema Development](#schema-development)
+    - [NestJS - Api Schema](#nestjs---api-schema)
+        - [Resolver](#resolver)
+    - [GraphQL Client](#graphql-client)
+        - [Angular](#angular)
+            - [Setup](#setup)
+            - [Queries](#queries)
+            - [Mutations](#mutations)
+            - [Subscriptions](#subscriptions)
+            - [Authentication](#authentication)
 
-## Prisma Setup
+## Prisma Setup (Prisma 설정)
 
-### 1. Install Dependencies
+### 1. Install Dependencies (의존성 설치)
 
-Install [Nestjs CLI](https://docs.nestjs.com/cli/usages) to start and [generate CRUD resources](https://trilon.io/blog/introducing-cli-generators-crud-api-in-1-minute)
+Install [Nestjs CLI](https://docs.nestjs.com/cli/usages) to start
+and [generate CRUD resources](https://trilon.io/blog/introducing-cli-generators-crud-api-in-1-minute)
 
 ```bash
 # npm
@@ -60,9 +62,12 @@ npm install
 yarn install
 ```
 
-### 2. PostgreSQL with Docker
+### 2. PostgreSQL with Docker (Docker를 이용한 PostgreSQL 설정)
 
-Setup a development PostgreSQL with Docker. Copy [.env.example](./.env.example) and rename to `.env` - `cp .env.example .env` - which sets the required environments for PostgreSQL such as `POSTGRES_USER`, `POSTGRES_PASSWORD` and `POSTGRES_DB`. Update the variables as you wish and select a strong password.
+Setup a development PostgreSQL with Docker. Copy [.env.example](./.env.example) and rename
+to `.env` - `cp .env.example .env` - which sets the required environments for PostgreSQL such
+as `POSTGRES_USER`, `POSTGRES_PASSWORD` and `POSTGRES_DB`. Update the variables as you wish and select a strong
+password.
 
 Start the PostgreSQL database
 
@@ -74,9 +79,13 @@ npm run docker:db
 
 ### 3. Prisma Migrate
 
-[Prisma Migrate](https://github.com/prisma/prisma2/tree/master/docs/prisma-migrate) is used to manage the schema and migration of the database. Prisma datasource requires an environment variable `DATABASE_URL` for the connection to the PostgreSQL database. Prisma reads the `DATABASE_URL` from the root [.env](./.env) file.
+[Prisma Migrate](https://github.com/prisma/prisma2/tree/master/docs/prisma-migrate) is used to manage the schema and
+migration of the database. Prisma datasource requires an environment variable `DATABASE_URL` for the connection to the
+PostgreSQL database. Prisma reads the `DATABASE_URL` from the root [.env](./.env) file.
 
-Use Prisma Migrate in your [development environment](https://www.prisma.io/blog/prisma-migrate-preview-b5eno5g08d0b#evolving-the-schema-in-development) to
+Use Prisma Migrate in
+your [development environment](https://www.prisma.io/blog/prisma-migrate-preview-b5eno5g08d0b#evolving-the-schema-in-development)
+to
 
 1. Creates `migration.sql` file
 2. Updates Database Schema
@@ -88,7 +97,8 @@ npx prisma migrate dev
 npm run migrate:dev
 ```
 
-If you like to customize your `migration.sql` file run the following command. After making your customizations run `npx prisma migrate dev` to apply it.
+If you like to customize your `migration.sql` file run the following command. After making your customizations
+run `npx prisma migrate dev` to apply it.
 
 ```bash
 npx prisma migrate dev --create-only
@@ -96,7 +106,10 @@ npx prisma migrate dev --create-only
 npm run migrate:dev:create
 ```
 
-If you are happy with your database changes you want to deploy those changes to your [production database](https://www.prisma.io/blog/prisma-migrate-preview-b5eno5g08d0b#applying-migrations-in-production-and-other-environments). Use `prisma migrate deploy` to apply all pending migrations, can also be used in CI/CD pipelines as it works without prompts.
+If you are happy with your database changes you want to deploy those changes to
+your [production database](https://www.prisma.io/blog/prisma-migrate-preview-b5eno5g08d0b#applying-migrations-in-production-and-other-environments).
+Use `prisma migrate deploy` to apply all pending migrations, can also be used in CI/CD pipelines as it works without
+prompts.
 
 ```bash
 npx prisma migrate deploy
@@ -104,9 +117,10 @@ npx prisma migrate deploy
 npm run migrate:deploy
 ```
 
-### 4. Prisma: Prisma Client JS
+### 4. Prisma: Prisma Client JS (Prisma: Prisma 클라이언트 JS)
 
-[Prisma Client JS](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/api) is a type-safe database client auto-generated based on the data model.
+[Prisma Client JS](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/api) is a type-safe database
+client auto-generated based on the data model.
 
 Generate Prisma Client JS by running
 
@@ -118,7 +132,7 @@ npx prisma generate
 npm run prisma:generate
 ```
 
-### 5. Seed the database data with this script
+### 5. Seed the database data with this script (데이터베이스 데이터 시드)
 
 Execute the script with this command:
 
@@ -126,7 +140,7 @@ Execute the script with this command:
 npm run seed
 ```
 
-### 6. Start NestJS Server
+### 6. Start NestJS Server (NestJS 서버 시작하기)
 
 Run Nest Server in Development mode:
 
@@ -149,7 +163,9 @@ GraphQL Playground for the NestJS Server is available here: http://localhost:300
 
 ## GraphQL Playground
 
-Open up the [example GraphQL queries](graphql/auth.graphql) and copy them to the GraphQL Playground. Some queries and mutations are secured by an auth guard. You have to acquire a JWT token from `signup` or `login`. Add the `accessToken`as followed to **HTTP HEADERS** in the playground and replace `YOURTOKEN` here:
+Open up the [example GraphQL queries](graphql/auth.graphql) and copy them to the GraphQL Playground. Some queries and
+mutations are secured by an auth guard. You have to acquire a JWT token from `signup` or `login`. Add the `accessToken`
+as followed to **HTTP HEADERS** in the playground and replace `YOURTOKEN` here:
 
 ```json
 {
@@ -163,7 +179,8 @@ Open up the [example GraphQL queries](graphql/auth.graphql) and copy them to the
 
 ## Docker
 
-Nest server is a Node.js application and it is easily [dockerized](https://nodejs.org/de/docs/guides/nodejs-docker-webapp/).
+Nest server is a Node.js application and it is
+easily [dockerized](https://nodejs.org/de/docs/guides/nodejs-docker-webapp/).
 
 See the [Dockerfile](./Dockerfile) on how to build a Docker image of your Nest server.
 
@@ -195,7 +212,8 @@ When you run your NestJS application in a Docker container update your [.env](.e
 + DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${DB_PORT}/${POSTGRES_DB}?schema=${DB_SCHEMA}&sslmode=prefer
 ```
 
-If `DATABASE_URL` is missing in the root `.env` file, which is loaded into the Docker container, the NestJS application will exit with the following error:
+If `DATABASE_URL` is missing in the root `.env` file, which is loaded into the Docker container, the NestJS application
+will exit with the following error:
 
 ```bash
 (node:19) UnhandledPromiseRejectionWarning: Error: error: Environment variable not found: DATABASE_URL.
@@ -238,7 +256,9 @@ npm run prisma:generate:watch
 
 ## NestJS - Api Schema
 
-The [schema.graphql](./src/schema.graphql) is generated with [code first approach](https://docs.nestjs.com/graphql/quick-start#code-first) from the models, resolvers and input classes.
+The [schema.graphql](./src/schema.graphql) is generated
+with [code first approach](https://docs.nestjs.com/graphql/quick-start#code-first) from the models, resolvers and input
+classes.
 
 You can use [class-validator](https://docs.nestjs.com/techniques/validation) to validate your inputs and arguments.
 
@@ -248,7 +268,11 @@ To implement the new query, a new resolver function needs to be added to `users.
 
 ```ts
 @Query(returns => User)
-async getUser(@Args() args): Promise<User> {
+async
+getUser(@Args()
+args
+):
+Promise < User > {
   return await this.prisma.client.user(args);
 }
 ```
@@ -261,25 +285,29 @@ Restart the NestJS server and this time the Query to fetch a `user` should work.
 
 A GraphQL client is necessary to consume the GraphQL api provided by the NestJS Server.
 
-Checkout [Apollo](https://www.apollographql.com/) a popular GraphQL client which offers several clients for React, Angular, Vue.js, Native iOS, Native Android and more.
+Checkout [Apollo](https://www.apollographql.com/) a popular GraphQL client which offers several clients for React,
+Angular, Vue.js, Native iOS, Native Android and more.
 
 ### Angular
 
 #### Setup
 
-To start using [Apollo Angular](https://www.apollographql.com/docs/angular/basics/setup.html) simply run in an Angular and Ionic project:
+To start using [Apollo Angular](https://www.apollographql.com/docs/angular/basics/setup.html) simply run in an Angular
+and Ionic project:
 
 ```bash
 ng add apollo-angular
 ```
 
-`HttpLink` from apollo-angular requires the `HttpClient`. Therefore, you need to add the `HttpClientModule` to the `AppModule`:
+`HttpLink` from apollo-angular requires the `HttpClient`. Therefore, you need to add the `HttpClientModule` to
+the `AppModule`:
 
 ```ts
 imports: [BrowserModule,
-    HttpClientModule,
-    ...,
-    GraphQLModule],
+  HttpClientModule,
+  ...,
+  GraphQLModule
+],
 ```
 
 You can also add the `GraphQLModule` in the `AppModule` to make `Apollo` available in your Angular App.
@@ -299,9 +327,10 @@ To use Apollo-Angular you can inject `private apollo: Apollo` into the construct
 To execute a query you can use:
 
 ```ts
-this.apollo.query({query: YOUR_QUERY});
+this.apollo.query({ query: YOUR_QUERY });
 
-# or
+#
+or
 
 this.apollo.watchQuery({
   query: YOUR_QUERY
@@ -329,7 +358,8 @@ const CurrentUserProfile = gql`
 export class HomePage implements OnInit {
   data: Observable<any>;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private apollo: Apollo) {
+  }
 
   ngOnInit() {
     this.data = this.apollo.watchQuery({
@@ -339,9 +369,11 @@ export class HomePage implements OnInit {
 }
 ```
 
-Use the `AsyncPipe` and [SelectPipe](https://www.apollographql.com/docs/angular/basics/queries.html#select-pipe) to unwrap the data Observable in the template:
+Use the `AsyncPipe` and [SelectPipe](https://www.apollographql.com/docs/angular/basics/queries.html#select-pipe) to
+unwrap the data Observable in the template:
 
 ```html
+
 <div *ngIf="data | async | select: 'me' as me">
   <p>Me id: {{me.id}}</p>
   <p>Me email: {{me.email}}</p>
@@ -351,7 +383,8 @@ Use the `AsyncPipe` and [SelectPipe](https://www.apollographql.com/docs/angular/
 
 Or unwrap the data using [RxJs](https://www.apollographql.com/docs/angular/basics/queries.html#rxjs).
 
-This will end up in an `GraphQL error` because `Me` is protected by an `@UseGuards(GqlAuthGuard)` and requires an `Bearer TOKEN`.
+This will end up in an `GraphQL error` because `Me` is protected by an `@UseGuards(GqlAuthGuard)` and requires
+an `Bearer TOKEN`.
 Please refer to the [Authentication](#authentication) section.
 
 **[⬆ back to top](#overview)**
@@ -390,7 +423,8 @@ const Login = gql`
 export class HomePage implements OnInit {
   data: Observable<any>;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private apollo: Apollo) {
+  }
 
   ngOnInit() {
     this.data = this.apollo.mutate({
@@ -416,9 +450,11 @@ this.apollo.subscribe({
 
 #### Authentication
 
-To authenticate your requests you have to add your `TOKEN` you receive on `signup` and `login` [mutation](#mutations) to each request which is protected by the `@UseGuards(GqlAuthGuard)`.
+To authenticate your requests you have to add your `TOKEN` you receive on `signup` and `login` [mutation](#mutations) to
+each request which is protected by the `@UseGuards(GqlAuthGuard)`.
 
-Because the apollo client is using `HttpClient` under the hood you are able to simply use an `Interceptor` to add your token to the requests.
+Because the apollo client is using `HttpClient` under the hood you are able to simply use an `Interceptor` to add your
+token to the requests.
 
 Create the following class:
 
@@ -434,7 +470,8 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor() {
+  }
 
   intercept(
     req: HttpRequest<any>,
@@ -458,12 +495,13 @@ Add the Interceptor to the `AppModule` providers like this:
 
 ```ts
 providers: [
-    ...
+  ...
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    ...
-  ]
+  ...
+]
 ```
 
-After you configured the Interceptor and retrieved the `TOKEN` from storage your request will succeed on resolvers with `@UseGuards(GqlAuthGuard)`.
+After you configured the Interceptor and retrieved the `TOKEN` from storage your request will succeed on resolvers
+with `@UseGuards(GqlAuthGuard)`.
 
 **[⬆ back to top](#overview)**
