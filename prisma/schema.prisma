@@ -12,16 +12,35 @@ generator dbml {
   provider = "prisma-dbml-generator"
 }
 
+model Service {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  name         String
+  serviceUsers ServiceUser[]
+}
+
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  password  String
-  firstname String?
-  lastname  String?
-  posts     Post[]
-  role      Role
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  email        String        @unique
+  password     String
+  firstname    String?
+  lastname     String?
+  serviceId    Int
+  role         Role
+  posts        Post[]
+  serviceUsers ServiceUser[]
+}
+
+model ServiceUser {
+  serviceId String
+  userId    String
+  service   Service @relation(fields: [serviceId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@id([serviceId, userId])
 }
 
 model Post {
