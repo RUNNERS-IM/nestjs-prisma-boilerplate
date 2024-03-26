@@ -1,17 +1,17 @@
 mutation Admin {
-  login(data: { email: "bart@simpson.com", password: "secret42" }) {
+  login(data: { email: "admin@runners.im", password: "1234" }) {
     ...AuthTokens
   }
 }
 
 mutation User {
-  login(data: { email: "lisa@simpson.com", password: "secret42" }) {
+  login(data: { email: "test1@runners.im", password: "1234" }) {
     ...AuthTokens
   }
 }
 
 mutation AuthUser {
-  signup(data: { email: "bart@simpson.com", password: "secret42" }) {
+  signup(data: { email: "test4@runners.im", password: "1234" }) {
     ...AuthTokens
   }
 }
