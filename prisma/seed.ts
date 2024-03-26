@@ -25,7 +25,7 @@ async function main() {
   console.log('Admin User:', adminUser);
 
   // 기본 Service 생성
-  const defaultService = await prisma.service.create({
+  const defaultService = await prisma.project.create({
     data: {
       name: 'Default Service',
     },
@@ -46,8 +46,8 @@ async function main() {
           email,
           password: passwordHash, // 같은 암호화된 비밀번호 사용
           role: Role.USER,
-          serviceUsers: {
-            create: [{ serviceId: defaultService.id }],
+          projectUsers: {
+            create: [{ projectId: defaultService.id }],
           },
         },
       }),
