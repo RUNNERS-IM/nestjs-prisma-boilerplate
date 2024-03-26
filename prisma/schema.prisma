@@ -16,12 +16,12 @@ generator dbml {
 // User Model
 // ======================================
 
-model Service {
+model Project {
   id           String        @id @default(cuid())
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   name         String
-  serviceUsers ServiceUser[]
+  serviceUsers ProjectUser[]
 }
 
 // ======================================
@@ -39,16 +39,16 @@ model User {
   lastname     String?
   role         Role
   posts        Post[]
-  serviceUsers ServiceUser[]
+  projectUsers ProjectUser[]
 }
 
-model ServiceUser {
+model ProjectUser {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   nickname  String?
   serviceId String
   userId    String
-  service   Service  @relation(fields: [serviceId], references: [id])
+  project   Project  @relation(fields: [serviceId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 
   @@id([serviceId, userId])
