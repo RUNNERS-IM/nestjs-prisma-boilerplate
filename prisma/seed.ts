@@ -11,7 +11,7 @@ async function main() {
   console.log('Seeding...');
 
   // 비밀번호 해시 생성
-  const passwordHash = await hash('1234', 10); // 10은 saltRounds를 의미합니다.
+  const passwordHash = await hash('12345678', 10); // 10은 saltRounds를 의미합니다.
 
   // 관리자 User 생성
   const adminUser = await prisma.user.create({
